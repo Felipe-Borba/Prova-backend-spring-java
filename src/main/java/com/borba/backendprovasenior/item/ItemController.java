@@ -36,8 +36,8 @@ public class ItemController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Map<String, Boolean>> delete(@PathVariable UUID id) throws RuntimeException {
+    public ResponseEntity<String> delete(@PathVariable UUID id) throws RuntimeException {
         this.item.delete(id);
-        return ResponseEntity.ok(Map.of("Deletado", true));
+        return ResponseEntity.ok("Deletado");
     }
 }

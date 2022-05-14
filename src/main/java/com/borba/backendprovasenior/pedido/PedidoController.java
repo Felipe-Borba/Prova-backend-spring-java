@@ -36,8 +36,8 @@ public class PedidoController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Map<String, Boolean>> delete(@PathVariable UUID id) {
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
         this.pedido.delete(id);
-        return ResponseEntity.ok(Map.of("Deletado", true));
+        return ResponseEntity.ok("Deletado");
     }
 }
