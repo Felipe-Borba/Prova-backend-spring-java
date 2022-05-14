@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table(name = "tb_item")
 public class Item {
     public enum Tipo {
-        PEDIDO,
+        PRODUTO,
         SERVICO
     }
 
@@ -33,4 +33,6 @@ public class Item {
     @JsonIgnore
     @ManyToMany(mappedBy = "PedidoItems")
     private Set<Pedido> pedidos = new HashSet<>();
+
+
 }
