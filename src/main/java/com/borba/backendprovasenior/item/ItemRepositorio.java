@@ -1,6 +1,5 @@
-package com.borba.backendprovasenior.repositorios;
+package com.borba.backendprovasenior.item;
 
-import com.borba.backendprovasenior.entidades.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

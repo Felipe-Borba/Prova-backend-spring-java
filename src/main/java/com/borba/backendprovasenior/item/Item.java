@@ -1,5 +1,6 @@
-package com.borba.backendprovasenior.entidades;
+package com.borba.backendprovasenior.item;
 
+import com.borba.backendprovasenior.pedido.Pedido;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

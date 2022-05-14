@@ -1,5 +1,6 @@
-package com.borba.backendprovasenior.entidades;
+package com.borba.backendprovasenior.pedido;
 
+import com.borba.backendprovasenior.item.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

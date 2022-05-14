@@ -1,8 +1,6 @@
-package com.borba.backendprovasenior.controllers;
+package com.borba.backendprovasenior.pedido;
 
-import com.borba.backendprovasenior.entidades.Pedido;
 import com.borba.backendprovasenior.exception.RecursoNaoEncontrado;
-import com.borba.backendprovasenior.repositorios.PedidoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
