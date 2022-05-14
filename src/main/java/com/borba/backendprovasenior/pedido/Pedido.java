@@ -35,8 +35,19 @@ public class Pedido {
     public Double getValorTotal() {
         var valorTotal = 0.0;
         for (Item item : PedidoItems) {
-            valorTotal += item.getValor();
+            if (item.getTipo().equals("produto")){
+                valorTotal += (item.getValor() * this.valorDesconto);
+            } else {
+                valorTotal += item.getValor();
+            }
         }
         return valorTotal;
+    }
+
+    public void setValorDesconto(Double valorDesconto) {
+        if (valorDesconto > 0 && valorDesconto < 1) {
+            throw new RuntimeException("O valor do desconto precisa ser um percentual entre 0 e 1");
+        }
+        this.valorDesconto = valorDesconto;
     }
 }

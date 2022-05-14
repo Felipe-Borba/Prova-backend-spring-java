@@ -27,4 +27,11 @@ public class Item {
     @JsonIgnore
     @ManyToMany(mappedBy = "PedidoItems")
     private Set<Pedido> pedidos = new HashSet<>();
+
+    public void setTipo(String tipo) {
+        if (!tipo.equals("produto") && !tipo.equals("servico")) {
+            throw new RuntimeException("O tipo do item deve ser: produto ou servico");
+        }
+        this.tipo = tipo;
+    }
 }
