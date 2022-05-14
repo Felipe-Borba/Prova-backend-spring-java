@@ -35,7 +35,7 @@ public class Pedido {
     public Double getValorTotal() {
         var valorTotal = 0.0;
         for (Item item : PedidoItems) {
-            if (item.getTipo().equals("produto")){
+            if (item.getTipo() == Item.Tipo.PEDIDO){
                 valorTotal += (item.getValor() * this.valorDesconto);
             } else {
                 valorTotal += item.getValor();

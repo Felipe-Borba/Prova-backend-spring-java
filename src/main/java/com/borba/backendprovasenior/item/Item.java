@@ -17,21 +17,20 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "tb_item")
 public class Item {
+    public enum Tipo {
+        PEDIDO,
+        SERVICO
+    }
+
     @Id
     @GeneratedValue
     private UUID id;
     private String descricao;
-    private String tipo; //todo refactor para um enum
+    @Enumerated(EnumType.STRING)
+    private Tipo tipo;
     private Double valor;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "PedidoItems")
     private Set<Pedido> pedidos = new HashSet<>();
-
-    public void setTipo(String tipo) {
-        if (!tipo.equals("produto") && !tipo.equals("servico")) {
-            throw new RuntimeException("O tipo do item deve ser: produto ou servico");
-        }
-        this.tipo = tipo;
-    }
 }
