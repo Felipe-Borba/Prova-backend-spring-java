@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,12 +23,17 @@ public class Pedido {
     private Double valorDesconto;
     private Double valorTotal;
 
-    @OneToMany
-    private Set<ItemPedido> items;
+    @ManyToMany
+    @JoinTable(
+            name = "tb_pedido_item",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    private Set<Item> PedidoItems = new HashSet<>();
 
     public Double getValorTotal() {
         var valorTotal = 0.0;
-        for(ItemPedido item : items) {
+        for (Item item : PedidoItems) {
             valorTotal += item.getValor();
         }
         return valorTotal;

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "tb_item_pedido")
+@Table(name = "tb_item")
 public class Item {
     @Id
     @GeneratedValue
@@ -24,7 +24,6 @@ public class Item {
     private Double valor;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "itens")
+    @ManyToMany(mappedBy = "PedidoItems")
     private Set<Pedido> pedidos = new HashSet<>();
-
 }

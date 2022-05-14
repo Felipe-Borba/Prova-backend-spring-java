@@ -31,7 +31,8 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<Pedido> insert(@RequestBody Pedido pedido) {
-        return ResponseEntity.ok(repositorio.save(pedido));
+        var result = repositorio.save(pedido);
+        return ResponseEntity.ok(result);
     }
 
     @PutMapping(value = "/{id}")
@@ -41,7 +42,7 @@ public class PedidoController {
 
         newPedido.setDescricao(pedido.getDescricao());
         newPedido.setValorDesconto(pedido.getValorDesconto());
-        newPedido.setItems(pedido.getItems());
+        newPedido.setPedidoItems(pedido.getPedidoItems());
         return ResponseEntity.ok(repositorio.save(newPedido));
     }
 
