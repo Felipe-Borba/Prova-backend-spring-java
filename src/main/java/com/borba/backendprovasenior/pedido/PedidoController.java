@@ -1,6 +1,5 @@
 package com.borba.backendprovasenior.pedido;
 
-import com.borba.backendprovasenior.exception.RecursoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,42 +13,31 @@ import java.util.UUID;
 public class PedidoController {
 
     @Autowired
-    private PedidoRepository repositorio;
+    private PedidoUseCase pedido;
 
     @GetMapping
     public ResponseEntity<List<Pedido>> findAll() {
-        return ResponseEntity.ok(repositorio.findAll());
+        return ResponseEntity.ok(this.pedido.findAll());
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Pedido> findById(@PathVariable UUID id) throws RuntimeException {
-        var pedido = repositorio.findById(id).orElseThrow(() -> new RecursoNaoEncontrado("Id não encontado: " + id));
-        return ResponseEntity.ok(pedido);
+    public ResponseEntity<Pedido> findById(@PathVariable UUID id)  {
+        return ResponseEntity.ok(this.pedido.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<Pedido> insert(@RequestBody Pedido pedido) {
-        var result = repositorio.save(pedido);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(this.pedido.save(pedido));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Pedido> update(@PathVariable UUID id, @RequestBody Pedido pedido) throws RuntimeException {
-        var newPedido = repositorio.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontrado("Id não encontado: " + id));
-
-        newPedido.setDescricao(pedido.getDescricao());
-        newPedido.setValorDesconto(pedido.getValorDesconto());
-        newPedido.setPedidoItems(pedido.getPedidoItems());
-        return ResponseEntity.ok(repositorio.save(newPedido));
+    public ResponseEntity<Pedido> update(@PathVariable UUID id, @RequestBody Pedido pedido)  {
+        return ResponseEntity.ok(this.pedido.update(id, pedido));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Map<String, Boolean>> delete(@PathVariable UUID id) throws RuntimeException {
-        var pedido = repositorio.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontrado("Id não encontado: " + id));
-
-        repositorio.delete(pedido);
+    public ResponseEntity<Map<String, Boolean>> delete(@PathVariable UUID id) {
+        this.pedido.delete(id);
         return ResponseEntity.ok(Map.of("Deletado", true));
     }
 }
