@@ -14,7 +14,7 @@ import java.util.UUID;
 public class ItemController {
 
     @Autowired
-    private ItemRepositorio repositorio;
+    private ItemRepository repositorio;
 
     @GetMapping
     public ResponseEntity<List<Item>> findAll() {

@@ -14,7 +14,7 @@ import java.util.UUID;
 public class PedidoController {
 
     @Autowired
-    private PedidoRepositorio repositorio;
+    private PedidoRepository repositorio;
 
     @GetMapping
     public ResponseEntity<List<Pedido>> findAll() {
