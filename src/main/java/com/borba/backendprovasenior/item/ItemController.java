@@ -1,6 +1,5 @@
 package com.borba.backendprovasenior.item;
 
-import com.borba.backendprovasenior.exception.RecursoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,43 +13,31 @@ import java.util.UUID;
 public class ItemController {
 
     @Autowired
-    private ItemRepository repositorio;
+    private ItemUseCase item;
 
     @GetMapping
     public ResponseEntity<List<Item>> findAll() {
-        return ResponseEntity.ok(repositorio.findAll());
+        return ResponseEntity.ok(this.item.findAll());
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Item> findById(@PathVariable UUID id) throws RuntimeException {
-        var item = repositorio.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontrado("Id não encontado: " + id));
-        return ResponseEntity.ok(item);
+        return ResponseEntity.ok(this.item.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<Item> insert(@RequestBody Item item) {
-        var result = repositorio.save(item);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(this.item.save(item));
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Item> update(@PathVariable UUID id, @RequestBody Item item) throws RuntimeException {
-        var newItem = repositorio.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontrado("Id não encontado: " + id));
-
-        newItem.setDescricao(item.getDescricao());
-        newItem.setTipo(item.getTipo());
-        newItem.setValor(item.getValor());
-        return ResponseEntity.ok(repositorio.save(newItem));
+        return ResponseEntity.ok(this.item.update(id, item));
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Map<String, Boolean>> delete(@PathVariable UUID id) throws RuntimeException {
-        var item = repositorio.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontrado("Id não encontado: " + id));
-
-        repositorio.delete(item);
+        this.item.delete(id);
         return ResponseEntity.ok(Map.of("Deletado", true));
     }
 }
