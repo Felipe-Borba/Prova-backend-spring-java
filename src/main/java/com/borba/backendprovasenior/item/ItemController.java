@@ -13,7 +13,7 @@ import java.util.UUID;
 public class ItemController {
 
     @Autowired
-    private ItemUseCase item;
+    private ItemService item;
 
     @GetMapping
     public ResponseEntity<List<Item>> findAll() {

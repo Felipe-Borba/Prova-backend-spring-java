@@ -13,7 +13,7 @@ import java.util.UUID;
 public class PedidoController {
 
     @Autowired
-    private PedidoUseCase pedido;
+    private PedidoService pedido;
 
     @GetMapping
     public ResponseEntity<List<Pedido>> findAll() {

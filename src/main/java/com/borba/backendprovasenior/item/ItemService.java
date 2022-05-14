@@ -2,11 +2,13 @@ package com.borba.backendprovasenior.item;
 
 import com.borba.backendprovasenior.exception.RecursoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-public class ItemUseCase {
+@Service
+public class ItemService {
     @Autowired
     private ItemRepository repository;
 
