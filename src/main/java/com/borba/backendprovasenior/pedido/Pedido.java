@@ -50,4 +50,8 @@ public class Pedido {
         }
         this.valorDesconto = valorDesconto;
     }
+
+    public void addItem(Item item) {
+        this.PedidoItems.add(item);
+    }
 }

@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -39,5 +38,11 @@ public class PedidoController {
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         this.pedido.delete(id);
         return ResponseEntity.ok("Deletado");
+    }
+
+    @PutMapping(value = "/{pedidoId}/adicionar-item/{itemId}")
+    public ResponseEntity<String> addItem(@PathVariable UUID pedidoId, @PathVariable UUID itemId) {
+        this.pedido.addItem(pedidoId, itemId);
+        return ResponseEntity.ok("Item Adicionado");
     }
 }
