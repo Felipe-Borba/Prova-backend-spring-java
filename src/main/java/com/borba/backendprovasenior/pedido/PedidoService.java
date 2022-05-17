@@ -1,6 +1,7 @@
 package com.borba.backendprovasenior.pedido;
 
-import com.borba.backendprovasenior.exception.RecursoNaoEncontrado;
+import com.borba.backendprovasenior.exception.errors.ConflictError;
+import com.borba.backendprovasenior.exception.errors.RecursoNaoEncontrado;
 import com.borba.backendprovasenior.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,6 +45,9 @@ public class PedidoService {
     public void addItem(UUID pedidoId, UUID itemId) {
         var pedido = this.findById(pedidoId);
         var item = this.itemService.findById(itemId);
+        if (!item.getActive()) {
+            throw new ConflictError("Não é possível adicionar um item desativado no pedido");
+        }
         pedido.addItem(item);
         pedidoRepository.save(pedido);
     }

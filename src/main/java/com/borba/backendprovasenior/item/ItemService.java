@@ -1,6 +1,6 @@
 package com.borba.backendprovasenior.item;
 
-import com.borba.backendprovasenior.exception.RecursoNaoEncontrado;
+import com.borba.backendprovasenior.exception.errors.RecursoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,15 +17,15 @@ public class ItemService {
         return repository.findAll(pageable);
     }
 
-    public Item findById(UUID id)  {
+    public Item findById(UUID id) {
         return repository.findById(id).orElseThrow(() -> new RecursoNaoEncontrado("Id não encontado: " + id));
     }
 
-    public Item save(Item item)  {
+    public Item save(Item item) {
         return repository.save(item);
     }
 
-    public Item update(UUID id, Item item)  {
+    public Item update(UUID id, Item item) {
         var newItem = this.findById(id);
         newItem.setDescricao(item.getDescricao());
         newItem.setTipo(item.getTipo());
@@ -34,7 +34,7 @@ public class ItemService {
         return this.save(newItem);
     }
 
-    public void delete(UUID id)  {
+    public void delete(UUID id) {
         var item = this.findById(id);
         repository.delete(item);
     }
