@@ -29,6 +29,7 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
     private Double valor;
+    private Boolean active;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "PedidoItems")

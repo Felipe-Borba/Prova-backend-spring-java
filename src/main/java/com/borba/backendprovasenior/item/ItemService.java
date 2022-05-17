@@ -30,6 +30,7 @@ public class ItemService {
         newItem.setDescricao(item.getDescricao());
         newItem.setTipo(item.getTipo());
         newItem.setValor(item.getValor());
+        newItem.setActive(item.getActive());
         return this.save(newItem);
     }
 
