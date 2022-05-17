@@ -1,11 +1,11 @@
 package com.borba.backendprovasenior.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -16,8 +16,8 @@ public class ItemController {
     private ItemService item;
 
     @GetMapping
-    public ResponseEntity<List<Item>> findAll() {
-        return ResponseEntity.ok(this.item.findAll());
+    public ResponseEntity<Page<Item>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(this.item.findAll(pageable));
     }
 
     @GetMapping(value = "/{id}")

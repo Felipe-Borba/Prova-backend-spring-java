@@ -3,9 +3,10 @@ package com.borba.backendprovasenior.pedido;
 import com.borba.backendprovasenior.exception.RecursoNaoEncontrado;
 import com.borba.backendprovasenior.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -15,8 +16,8 @@ public class PedidoService {
     @Autowired
     private ItemService itemService;
 
-    public List<Pedido> findAll() {
-        return pedidoRepository.findAll();
+    public Page<Pedido> findAll(Pageable pageable) {
+        return pedidoRepository.findAll(pageable);
     }
 
     public Pedido findById(UUID id) {

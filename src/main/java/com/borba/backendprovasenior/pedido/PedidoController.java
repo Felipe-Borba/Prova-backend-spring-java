@@ -1,10 +1,11 @@
 package com.borba.backendprovasenior.pedido;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -15,8 +16,8 @@ public class PedidoController {
     private PedidoService pedido;
 
     @GetMapping
-    public ResponseEntity<List<Pedido>> findAll() {
-        return ResponseEntity.ok(this.pedido.findAll());
+    public ResponseEntity<Page<Pedido>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(this.pedido.findAll(pageable));
     }
 
     @GetMapping(value = "/{id}")
