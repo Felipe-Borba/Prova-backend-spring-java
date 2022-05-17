@@ -1,5 +1,6 @@
 package com.borba.backendprovasenior.item;
 
+import com.borba.backendprovasenior.exception.errors.ConflictError;
 import com.borba.backendprovasenior.exception.errors.RecursoNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,11 @@ public class ItemService {
 
     public void delete(UUID id) {
         var item = this.findById(id);
+        var hasAssociation = !item.getPedidos().isEmpty();
+        if (hasAssociation) {
+            throw new ConflictError("Não é possível excluir um item associado a um pedido");
+        }
+
         repository.delete(item);
     }
 }
