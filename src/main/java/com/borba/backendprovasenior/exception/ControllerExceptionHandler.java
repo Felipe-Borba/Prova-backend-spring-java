@@ -1,5 +1,6 @@
 package com.borba.backendprovasenior.exception;
 
+import com.borba.backendprovasenior.exception.errors.ConflictError;
 import com.borba.backendprovasenior.exception.errors.RecursoNaoEncontrado;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import java.time.Instant;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(RecursoNaoEncontrado.class)
+    @ExceptionHandler(ConflictError.class)
     public ResponseEntity<StandartError> ConflictErrorHandler(Exception ex, HttpServletRequest request) {
         var httpStatus = HttpStatus.CONFLICT;
         var error = StandartError
