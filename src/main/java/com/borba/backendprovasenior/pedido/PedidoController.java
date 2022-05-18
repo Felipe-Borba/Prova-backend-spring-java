@@ -46,4 +46,9 @@ public class PedidoController {
         this.pedido.addItem(pedidoId, itemId);
         return ResponseEntity.ok("Item Adicionado");
     }
+
+    @PutMapping(value = "/{pedidoId}/desconto")
+    public ResponseEntity<Pedido> applyDiscount(@PathVariable UUID pedidoId, @RequestBody Pedido pedido) {
+        return ResponseEntity.ok(this.pedido.applyDiscount(pedidoId, pedido.getValorDesconto()));
+    }
 }

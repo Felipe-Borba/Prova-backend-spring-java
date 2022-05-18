@@ -32,9 +32,18 @@ public class PedidoService {
     public Pedido update(UUID id, Pedido pedido) {
         var newPedido = this.findById(id);
         newPedido.setDescricao(pedido.getDescricao());
-        newPedido.setValorDesconto(pedido.getValorDesconto());
         newPedido.setPedidoItems(pedido.getPedidoItems());
+        newPedido.setStatus(pedido.getStatus());
         return pedidoRepository.save(newPedido);
+    }
+
+    public Pedido applyDiscount(UUID id, Double value) {
+        var pedido = this.findById(id);
+        if(pedido.getStatus() == Pedido.Status.FECHADO) {
+            throw new ConflictError("Não é possível aplicar desconto a um pedido fechado");
+        }
+        pedido.setValorDesconto(value);
+        return pedidoRepository.save(pedido);
     }
 
     public void delete(UUID id) {

@@ -16,6 +16,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "tb_pedido")
 public class Pedido {
+    public enum Status {
+        ABERTO,
+        FECHADO
+    }
 
     @Id
     @GeneratedValue
@@ -23,6 +27,8 @@ public class Pedido {
     private String descricao;
     private Double valorDesconto;
     private Double valorTotal;
+    @Enumerated(EnumType.STRING)
+    private Pedido.Status status;
 
     @ManyToMany
     @JoinTable(
