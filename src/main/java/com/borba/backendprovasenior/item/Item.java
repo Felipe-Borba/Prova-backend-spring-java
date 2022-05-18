@@ -32,7 +32,7 @@ public class Item {
     private Boolean active;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "PedidoItems")
+    @ManyToMany(mappedBy = "pedidoItems")
     private Set<Pedido> pedidos = new HashSet<>();
 
 }

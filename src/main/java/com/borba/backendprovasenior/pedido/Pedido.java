@@ -26,7 +26,9 @@ public class Pedido {
     private UUID id;
     private String descricao;
     private Double valorDesconto;
-    private Double valorTotal;
+    private Double valorTotalServico;
+    private Double valorTotalProduto;
+    private Double valorTotalPedido;
     @Enumerated(EnumType.STRING)
     private Pedido.Status status;
 
@@ -36,14 +38,26 @@ public class Pedido {
             joinColumns = @JoinColumn(name = "pedido_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id")
     )
-    private Set<Item> PedidoItems = new HashSet<>();
+    private Set<Item> pedidoItems = new HashSet<>();
 
-    public Double getValorTotal() {
+    public Double getValorTotalPedido() {
+        return (valorTotalProduto * valorDesconto) + valorTotalServico;
+    }
+
+    public Double getValorTotalServico() {
         var valorTotal = 0.0;
-        for (Item item : PedidoItems) {
-            if (item.getTipo() == Item.Tipo.PRODUTO){
-                valorTotal += (item.getValor() * this.valorDesconto);
-            } else {
+        for (Item item : pedidoItems) {
+            if (item.getTipo() == Item.Tipo.SERVICO) {
+                valorTotal += item.getValor();
+            }
+        }
+        return valorTotal;
+    }
+
+    public Double getValorTotalProduto() {
+        var valorTotal = 0.0;
+        for (Item item : pedidoItems) {
+            if (item.getTipo() == Item.Tipo.PRODUTO) {
                 valorTotal += item.getValor();
             }
         }
@@ -58,6 +72,6 @@ public class Pedido {
     }
 
     public void addItem(Item item) {
-        this.PedidoItems.add(item);
+        this.pedidoItems.add(item);
     }
 }
