@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -17,30 +20,39 @@ import java.util.UUID;
 @Table(name = "tb_pedido")
 public class Pedido {
     public enum Status {
-        ABERTO,
-        FECHADO
+        ABERTO, FECHADO
     }
 
     @Id
     @GeneratedValue
     private UUID id;
+
+    @NotBlank(message = "Descrição é obrigatório")
     private String descricao;
-    private Double valorDesconto;
-    private Double valorTotalServico;
-    private Double valorTotalProduto;
-    private Double valorTotalPedido;
+
+    @Min(value = 0, message = "Valor do desconto não pode ser menor que 0")
+    @Max(value = 1, message = "Valor do desconto não pode ser maior que 1")
+    private Double valorDesconto = 0.0;
+
+    @Transient
+    private Double valorTotalServico = 0.0;
+
+    @Transient
+    private Double valorTotalProduto = 0.0;
+
+    @Transient
+    private Double valorTotalPedido = 0.0;
+
     @Enumerated(EnumType.STRING)
-    private Pedido.Status status;
+    private Pedido.Status status = Status.ABERTO;
 
     @ManyToMany
-    @JoinTable(
-            name = "tb_pedido_item",
-            joinColumns = @JoinColumn(name = "pedido_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
-    )
+    @JoinTable(name = "tb_pedido_item", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> pedidoItems = new HashSet<>();
 
+
     public Double getValorTotalPedido() {
+        //fixme calculando errado o valor total do pedido
         return (valorTotalProduto * valorDesconto) + valorTotalServico;
     }
 
@@ -62,13 +74,6 @@ public class Pedido {
             }
         }
         return valorTotal;
-    }
-
-    public void setValorDesconto(Double valorDesconto) {
-        if (valorDesconto > 0 && valorDesconto < 1) {
-            throw new RuntimeException("O valor do desconto precisa ser um percentual entre 0 e 1");
-        }
-        this.valorDesconto = valorDesconto;
     }
 
     public void addItem(Item item) {

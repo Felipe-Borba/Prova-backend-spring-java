@@ -1,5 +1,5 @@
 -- Seeder
-INSERT INTO tb_pedido(id, valor_desconto, valor_total_servico, valor_total_produto, valor_total_pedido,  descricao, status) VALUES ('0efd4845-fc94-46d4-a36b-591375526042', 0.0, 0.0, 0.0, 0.0, 'pedido1', 'ABERTO')
+INSERT INTO tb_pedido(id, valor_desconto,  descricao, status) VALUES ('0efd4845-fc94-46d4-a36b-591375526042', 0.0, 'pedido1', 'ABERTO')
 
 INSERT INTO tb_item(id, tipo, valor, descricao, active) VALUES ('67967d13-a8e4-4204-a8ff-60c21c66f6e2', 'PRODUTO', 10.5, 'fio', true)
 INSERT INTO tb_item(id, tipo, valor, descricao, active) VALUES ('22f6c4ad-104a-48cb-847c-1177ae574266', 'PRODUTO', 4.5, 'tecido', true)

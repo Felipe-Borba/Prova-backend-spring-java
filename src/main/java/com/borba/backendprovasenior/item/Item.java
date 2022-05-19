@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -25,14 +26,19 @@ public class Item {
     @Id
     @GeneratedValue
     private UUID id;
+
+    @NotBlank(message = "Descrição é obrigatório")
     private String descricao;
+
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
+
+    @NotBlank(message = "Valor não é obrigatório")
     private Double valor;
+
     private Boolean active;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "pedidoItems")
     private Set<Pedido> pedidos = new HashSet<>();
-
 }

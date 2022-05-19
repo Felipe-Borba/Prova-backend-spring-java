@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -26,7 +27,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Item> insert(@RequestBody Item item) {
+    public ResponseEntity<Item> insert( @Valid @RequestBody Item item) {
         return ResponseEntity.ok(this.item.save(item));
     }
 

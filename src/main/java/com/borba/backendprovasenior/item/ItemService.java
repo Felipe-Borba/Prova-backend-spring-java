@@ -23,6 +23,9 @@ public class ItemService {
     }
 
     public Item save(Item item) {
+        if(!item.getActive()) {
+            item.setActive(true);
+        }
         return repository.save(item);
     }
 

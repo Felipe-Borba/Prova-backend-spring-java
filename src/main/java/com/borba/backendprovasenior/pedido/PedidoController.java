@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -26,7 +27,7 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> insert(@RequestBody Pedido pedido) {
+    public ResponseEntity<Pedido> insert(@Valid @RequestBody Pedido pedido) {
         return ResponseEntity.ok(this.pedido.save(pedido));
     }
 
