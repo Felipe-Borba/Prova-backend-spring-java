@@ -23,7 +23,7 @@ public class ItemService {
     }
 
     public Item save(Item item) {
-        if(!item.getActive()) {
+        if(item.getActive() == null) {
             item.setActive(true);
         }
         return repository.save(item);
