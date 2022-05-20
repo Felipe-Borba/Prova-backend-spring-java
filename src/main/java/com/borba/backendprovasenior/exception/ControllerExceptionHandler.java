@@ -43,7 +43,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandartError> ConflictErrorHandler(Exception ex, HttpServletRequest request) {
         var httpStatus = HttpStatus.CONFLICT;
         Map<String, String> errors = new HashMap<>();
-        errors.put("Error:", ex.getMessage());
+        errors.put("error:", ex.getMessage());
 
         var error = StandartError
                 .builder()
@@ -60,7 +60,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandartError> RecursoNaoEncontradoHandler(Exception ex, HttpServletRequest request) {
         var httpStatus = HttpStatus.NOT_FOUND;
         Map<String, String> errors = new HashMap<>();
-        errors.put("Error:", ex.getMessage());
+        errors.put("error:", ex.getMessage());
 
         var error = StandartError
                 .builder()
@@ -77,7 +77,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandartError> exceptionHandler(Exception ex, HttpServletRequest request) {
         var httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         Map<String, String> errors = new HashMap<>();
-        errors.put("Error:", ex.getMessage());
+        errors.put("error:", ex.getMessage());
 
         var error = StandartError
                 .builder()

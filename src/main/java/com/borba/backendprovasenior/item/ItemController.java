@@ -27,7 +27,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Item> insert( @Valid @RequestBody Item item) {
+    public ResponseEntity<Item> save(@Valid @RequestBody Item item) {
         return ResponseEntity.ok(this.item.save(item));
     }
 
