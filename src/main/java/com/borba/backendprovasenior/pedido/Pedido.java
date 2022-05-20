@@ -47,13 +47,16 @@ public class Pedido {
     private Pedido.Status status = Status.ABERTO;
 
     @ManyToMany
-    @JoinTable(name = "tb_pedido_item", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+    @JoinTable(
+            name = "tb_pedido_item",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
     private Set<Item> pedidoItems = new HashSet<>();
 
 
     public Double getValorTotalPedido() {
-        //fixme calculando errado o valor total do pedido
-        return (valorTotalProduto * valorDesconto) + valorTotalServico;
+        return getValorTotalProduto() + getValorTotalServico();
     }
 
     public Double getValorTotalServico() {
@@ -73,7 +76,7 @@ public class Pedido {
                 valorTotal += item.getValor();
             }
         }
-        return valorTotal;
+        return valorTotal * (1 - valorDesconto);
     }
 
     public void addItem(Item item) {
