@@ -1,10 +1,7 @@
 package com.borba.backendprovasenior.pedido;
 
-import com.borba.backendprovasenior.item.Item;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
 
 import static com.borba.backendprovasenior.util.PedidoCreator.createPedidoWithProdutoServico;
 
