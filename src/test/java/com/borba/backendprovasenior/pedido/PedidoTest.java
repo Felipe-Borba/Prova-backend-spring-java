@@ -4,15 +4,12 @@ import com.borba.backendprovasenior.item.Item;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashSet;
 
 @ExtendWith(SpringExtension.class)
 class PedidoTest {
-    @InjectMocks
-    private Pedido pedido;
 
     private Item createProduto() {
         var produto = new Item();

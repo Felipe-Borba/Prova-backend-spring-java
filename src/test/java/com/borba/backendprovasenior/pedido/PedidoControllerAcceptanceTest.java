@@ -1,8 +1,11 @@
 package com.borba.backendprovasenior.pedido;
 
+import com.borba.backendprovasenior.item.Item;
 import org.json.JSONObject;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -12,8 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class PedidoControllerAcceptanceTest {
+
     @Autowired
     private MockMvc mvc;
 
@@ -85,5 +89,83 @@ public class PedidoControllerAcceptanceTest {
                 .andExpect(jsonPath("$.content[0].pedidoItems.length()").value(2))
                 .andExpect(jsonPath("$.content.length()").value(1))
                 .andReturn();
+    }
+
+    @Test
+    public void whenCallDeletePedido_shouldDeletePedido_IfPedidoExits() throws Exception {
+        var request = delete("/pedido/0efd4845-fc94-46d4-a36b-591375526042");
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Deletado"))
+                .andReturn();
+
+        var pedido = this.repository.existsById(UUID.fromString("0efd4845-fc94-46d4-a36b-591375526042"));
+        assertThat(pedido).isFalse();
+    }
+
+    @Test
+    public void whenCallDeletePedido_shouldNotDeletePedido_IfPedidoDoNotExists() throws Exception {
+        var request = delete("/pedido/d990bc28-0768-4b64-8e32-4945ffc4a998");
+        mvc.perform(request)
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message.[*]").value("Id não encontado: d990bc28-0768-4b64-8e32-4945ffc4a998"))
+                .andReturn();
+
+        var item = this.repository.existsById(UUID.fromString("0efd4845-fc94-46d4-a36b-591375526042"));
+        assertThat(item).isTrue();
+    }
+
+    @Test
+    public void whenCallGetPedido_shouldReturnPedido_ifExistInDatabase() throws Exception {
+        mvc.perform(get("/pedido/0efd4845-fc94-46d4-a36b-591375526042"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("0efd4845-fc94-46d4-a36b-591375526042"))
+                .andExpect(jsonPath("$.descricao").value("pedido1"))
+                .andExpect(jsonPath("$.valorDesconto").value(0.0))
+                .andExpect(jsonPath("$.valorTotalServico").value(50))
+                .andExpect(jsonPath("$.valorTotalProduto").value(4.5))
+                .andExpect(jsonPath("$.valorTotalPedido").value(54.5))
+                .andExpect(jsonPath("$.status").value("ABERTO"))
+                .andExpect(jsonPath("$.pedidoItems.length()").value(2))
+                .andReturn();
+    }
+
+    @Test
+    public void whenCallGetPedido_shouldReturnError_ifNotExistInDatabase() throws Exception {
+        mvc.perform(get("/pedido/d990bc28-0768-4b64-8e32-4945ffc4a998"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message.[*]").value("Id não encontado: d990bc28-0768-4b64-8e32-4945ffc4a998"))
+                .andReturn();
+    }
+
+    @Test
+    public void whenCallUpdatePedido_shouldUpdateOnlyStatusAndDescription_IfAllParamsAreValid() throws Exception {
+        var requestBody = new JSONObject();
+        requestBody.put("descricao", "pedido teste");
+        requestBody.put("valorDesconto", 0.5);
+        requestBody.put("status", "FECHADO");
+
+        var result = mvc.perform(put("/pedido/0efd4845-fc94-46d4-a36b-591375526042")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody.toString())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("0efd4845-fc94-46d4-a36b-591375526042"))
+                .andExpect(jsonPath("$.descricao").value("pedido teste"))
+                .andExpect(jsonPath("$.valorDesconto").value(0.0))
+                .andExpect(jsonPath("$.valorTotalServico").value(50))
+                .andExpect(jsonPath("$.valorTotalProduto").value(4.5))
+                .andExpect(jsonPath("$.valorTotalPedido").value(54.5))
+                .andExpect(jsonPath("$.status").value("FECHADO"))
+                .andExpect(jsonPath("$.pedidoItems.length()").value(2))
+                .andReturn();
+
+        var responseObj = new JSONObject(result.getResponse().getContentAsString());
+        var id = responseObj.get("id").toString();
+        var pedido = this.repository.findById(UUID.fromString(id)).get();
+
+        assertThat(pedido.getDescricao()).isEqualTo("pedido teste");
+        assertThat(pedido.getValorDesconto()).isEqualTo(0);
+        assertThat(pedido.getStatus()).isEqualTo(Pedido.Status.FECHADO);
     }
 }
