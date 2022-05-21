@@ -3,6 +3,7 @@ package com.borba.backendprovasenior.pedido;
 import com.borba.backendprovasenior.exception.errors.ConflictError;
 import com.borba.backendprovasenior.exception.errors.RecursoNaoEncontrado;
 import com.borba.backendprovasenior.item.ItemService;
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +18,8 @@ public class PedidoService {
     @Autowired
     private ItemService itemService;
 
-    public Page<Pedido> findAll(Pageable pageable) {
-        return pedidoRepository.findAll(pageable);
+    public Page<Pedido> findAll(Predicate predicate, Pageable pageable) {
+        return pedidoRepository.findAll(predicate, pageable);
     }
 
     public Pedido findById(UUID id) {

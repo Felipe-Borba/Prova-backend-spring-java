@@ -1,8 +1,11 @@
 package com.borba.backendprovasenior.pedido;
 
+import com.borba.backendprovasenior.item.Item;
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +20,11 @@ public class PedidoController {
     private PedidoService pedido;
 
     @GetMapping
-    public ResponseEntity<Page<Pedido>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(this.pedido.findAll(pageable));
+    public ResponseEntity<Page<Pedido>> findAll(
+            @QuerydslPredicate(root = Pedido.class) Predicate predicate,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(this.pedido.findAll(predicate, pageable));
     }
 
     @GetMapping(value = "/{id}")
