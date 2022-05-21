@@ -32,7 +32,6 @@ public class PedidoService {
     public Pedido update(UUID id, Pedido pedido) {
         var newPedido = this.findById(id);
         newPedido.setDescricao(pedido.getDescricao());
-        newPedido.setPedidoItems(pedido.getPedidoItems());
         newPedido.setStatus(pedido.getStatus());
         return pedidoRepository.save(newPedido);
     }
@@ -58,6 +57,13 @@ public class PedidoService {
             throw new ConflictError("Não é possível adicionar um item desativado no pedido");
         }
         pedido.addItem(item);
+        pedidoRepository.save(pedido);
+    }
+
+    public void removeItem(UUID pedidoId, UUID itemId) {
+        var pedido = this.findById(pedidoId);
+        var item = this.itemService.findById(itemId);
+        pedido.getPedidoItems().remove(item);
         pedidoRepository.save(pedido);
     }
 }

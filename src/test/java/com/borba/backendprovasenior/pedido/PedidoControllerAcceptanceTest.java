@@ -168,4 +168,28 @@ public class PedidoControllerAcceptanceTest {
         assertThat(pedido.getValorDesconto()).isEqualTo(0);
         assertThat(pedido.getStatus()).isEqualTo(Pedido.Status.FECHADO);
     }
+
+    @Test
+    void whenCallRemovePedidoItem_shouldRemoveItemFromPedido_ifItemExistInPedido() throws Exception {
+        var result = mvc.perform(put("/pedido/0efd4845-fc94-46d4-a36b-591375526042/remover-item/d4530f2f-f247-47a8-b779-4acdf84508a7"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Item removido"))
+                .andReturn();
+
+        var pedido = this.repository.findById(UUID.fromString("0efd4845-fc94-46d4-a36b-591375526042")).get();
+
+        assertThat(pedido.getPedidoItems()).hasSize(1);
+    }
+
+    @Test
+    void whenCallRemovePedidoItem_shouldNotRemoveItemFromPedido_ifItemDoNotExistInPedido() throws Exception {
+        var result = mvc.perform(put("/pedido/0efd4845-fc94-46d4-a36b-591375526042/remover-item/67967d13-a8e4-4204-a8ff-60c21c66f6e2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Item removido"))
+                .andReturn();
+
+        var pedido = this.repository.findById(UUID.fromString("0efd4845-fc94-46d4-a36b-591375526042")).get();
+
+        assertThat(pedido.getPedidoItems()).hasSize(2);
+    }
 }

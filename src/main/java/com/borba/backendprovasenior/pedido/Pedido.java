@@ -4,6 +4,7 @@ import com.borba.backendprovasenior.item.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "tb_pedido")
 public class Pedido {

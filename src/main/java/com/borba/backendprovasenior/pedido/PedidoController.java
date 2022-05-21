@@ -45,7 +45,13 @@ public class PedidoController {
     @PutMapping(value = "/{pedidoId}/adicionar-item/{itemId}")
     public ResponseEntity<String> addItem(@PathVariable UUID pedidoId, @PathVariable UUID itemId) {
         this.pedido.addItem(pedidoId, itemId);
-        return ResponseEntity.ok("Item Adicionado");
+        return ResponseEntity.ok("Item adicionado");
+    }
+
+    @PutMapping(value = "/{pedidoId}/remover-item/{itemId}")
+    public ResponseEntity<String> removeItem(@PathVariable UUID pedidoId, @PathVariable UUID itemId) {
+        this.pedido.removeItem(pedidoId, itemId);
+        return ResponseEntity.ok("Item removido");
     }
 
     @PutMapping(value = "/{pedidoId}/desconto")
