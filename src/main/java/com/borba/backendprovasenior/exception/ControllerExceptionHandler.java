@@ -58,7 +58,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(RecursoNaoEncontrado.class)
     public ResponseEntity<StandartError> RecursoNaoEncontradoHandler(Exception ex, HttpServletRequest request) {
-        var httpStatus = HttpStatus.NOT_FOUND; //todo mudar para 400 bad request
+        var httpStatus = HttpStatus.BAD_REQUEST;
         Map<String, String> errors = new HashMap<>();
         errors.put("error:", ex.getMessage());
 

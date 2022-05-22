@@ -80,7 +80,7 @@ public class ItemControllerAcceptanceTest {
     @Test
     public void whenCallGetItem_shouldReturnError_ifItemDoNotExistInDatabase() throws Exception {
         mvc.perform(get("/item/3f7b79f4-5688-4ae8-bcf9-7b0ed0c989a5"))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message.[*]").value("Id não encontado: 3f7b79f4-5688-4ae8-bcf9-7b0ed0c989a5"))
                 .andReturn();
     }

@@ -107,7 +107,7 @@ public class PedidoControllerAcceptanceTest {
     public void whenCallDeletePedido_shouldNotDeletePedido_IfPedidoDoNotExists() throws Exception {
         var request = delete("/pedido/d990bc28-0768-4b64-8e32-4945ffc4a998");
         mvc.perform(request)
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message.[*]").value("Id não encontado: d990bc28-0768-4b64-8e32-4945ffc4a998"))
                 .andReturn();
 
@@ -133,7 +133,7 @@ public class PedidoControllerAcceptanceTest {
     @Test
     public void whenCallGetPedido_shouldReturnError_ifNotExistInDatabase() throws Exception {
         mvc.perform(get("/pedido/d990bc28-0768-4b64-8e32-4945ffc4a998"))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message.[*]").value("Id não encontado: d990bc28-0768-4b64-8e32-4945ffc4a998"))
                 .andReturn();
     }
