@@ -1,7 +1,7 @@
 
 # Prova Senior Backend
 
-A descrição completa do desafio pode ser accesada atraves do arquivo:
+A descrição completa do desafio pode ser acessada através do arquivo:
 [1-PROVA DE BACKEND JAVA PARA ERP.pdf](https://github.com/Felipe-Borba/Backend-prova-senior/blob/master/1-PROVA%20DE%20BACKEND%20JAVA%20PARA%20ERP.pdf) na raiz do projeto.
 
 ## Instalação
@@ -47,9 +47,9 @@ Aconselho a rodar o projeto localmente a partir da IDE [intellij](https://www.je
 
 A documentação com a descrição das rotas pode ser acessada a partir do link: 
 
-[http://localhost:8080/api-reference.html](http://localhost:8080/api-reference.html) 
-
-`Ps. O servidor precisa estar rodando localmente`
+[http://localhost:8080/api-reference.html](http://localhost:8080/api-reference.html)
+![screenshot of swagger](/swagger-screenshot.PNG "screenshot da documentação das funcionalidades")
+`Ps. O servidor precisa estar rodando localmente para acessar essa página`
 
 
 
